@@ -8,6 +8,12 @@ const category = () => {
     })
 }
 
+const removeActive = ()=> {
+   const remove = document.querySelectorAll('.activeBtn')
+   remove.forEach(rm => {
+    rm.classList.remove('active')
+   })
+}
 // All plants section
 const allPlants = () =>{
     const url = "https://openapi.programming-hero.com/api/plants";
@@ -35,11 +41,6 @@ const displaAllplants = (posts)=> {
                 </div> 
         
         `
-
-
-
-
-
         container.append(newContainer)
     })
     
@@ -51,6 +52,9 @@ const loadData = (no)=> {
     fetch(url)
     .then(res => res.json())
     .then(data => {
+        removeActive();
+        const clickBtn = document.getElementById(`activeClass-${no}`)
+        clickBtn.classList.add('active')
         displaLoadData(data.plants)
     })
 }
@@ -85,8 +89,8 @@ const categoryDisplay = (id) => {
         const newContainer = document.createElement('h3');
         newContainer.innerHTML = `
                   <div>
-                      <button onclick = "loadData(${data.id})" class="  hover:bg-[#15803D] hover:text-white w-full font-[400] cursor-pointer
-                       rounded-xl text-left p-2">${data.category_name}</button>
+                      <button id= "activeClass-${data.id}" onclick = "loadData(${data.id})" class="  hover:bg-[#15803D] hover:text-white w-full font-[400] cursor-pointer
+                       rounded-xl text-left p-1 activeBtn">${data.category_name}</button>
                 </div>
         
         `
