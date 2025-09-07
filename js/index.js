@@ -134,7 +134,7 @@ const addtoCart = (name, number) => {
                         <h1 class="font-semibold">${name}</h1>
                       <p ><span class="text-xl">৳</span>${number} x 1</p>
                       </div>
-                      <div>
+                      <div class = "remove-items cursor-pointer">
                         <i class="fa-solid fa-xmark"></i>
                       </div>
                       </div>
@@ -142,6 +142,13 @@ const addtoCart = (name, number) => {
       `
       total +=num;
       document.getElementById('total').innerHTML = total;
+
+      const removeBtn = newContainer.querySelector('.remove-items');
+      removeBtn.addEventListener('click', ()=>{
+          container.removeChild(newContainer)
+          total -=num;
+          document.getElementById('total').innerHTML = total;
+      })
       
       container.append(newContainer)
 }
