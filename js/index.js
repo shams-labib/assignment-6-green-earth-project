@@ -24,7 +24,7 @@ const displayModal = (id) => {
             <h1 class="font-semibold text-xl">${id.name}</h1>
             <img class="h-[40vh] w-full rounded-lg" src="${id.image}" alt="">
             <p class="font-semibold">Category : ${id.category}</p>
-            <p>Price: ${id.price}</p>
+            <p>Price: <span class = "text-2xl">৳</span>${id.price}</p>
             <h3>Description : ${id.description}</h3>
         </div>
        `
@@ -56,13 +56,13 @@ const displaAllplants = (posts)=> {
         newContainer.innerHTML = `
            <div class="space-y-5 w-[350px] h-full rounded-lg shadow-md p-5 ">
                     <img class="h-60 w-full rounded-lg" src="${post.image}" alt="">
-                    <h1 class = 'font-semibold'>${post.name}</h1>
+                    <h1 onclick="modalDataLoad(${post.id})" class = 'font-semibold'>${post.name}</h1>
                     <p>${post.description}</p>
                     <div class="flex justify-between">
-                        <button onclick="modalDataLoad(${post.id})" class="btn  rounded-3xl bg-[#DCFCE7]">${post.category}</button>
+                        <button class="btn  rounded-3xl bg-[#DCFCE7]">${post.category}</button>
                         <h3><span class = "text-2xl">৳</span>${post.price}</h3>
                     </div>
-                    <button class="btn bg-[#15803D] text-white w-full rounded-3xl">Add to Cart</button>
+                    <button onclick = "addtoCart('${post.name}', ${post.price})" class="btn bg-[#15803D] text-white w-full rounded-3xl">Add to Cart</button>
                 </div> 
         
         `
@@ -80,7 +80,7 @@ const loadData = (no)=> {
         removeActive();
         const clickBtn = document.getElementById(`activeClass-${no}`)
         clickBtn.classList.add('active')
-        displaLoadData(data.plants)
+        displaLoadData(data.plants);
     })
 }
 const displaLoadData = (data) => {
@@ -89,15 +89,15 @@ const displaLoadData = (data) => {
     data.forEach(post => {
        const newContainer = document.createElement('div');
        newContainer.innerHTML = `
-       <div class="space-y-5 w-[350px] h-full rounded-lg shadow-md p-5">
+       <div class=" w-[350px]  rounded-lg shadow-md p-5 space-y-5">
                     <img class="h-60 w-full rounded-lg" src="${post.image}" alt="">
-                    <h1 class = 'font-semibold'>${post.name}</h1>
+                    <h1  onclick="modalDataLoad(${post.id})" class = 'font-semibold'>${post.name}</h1>
                     <p>${post.description}</p>
                     <div class="flex justify-between">
-                        <button onclick="modalDataLoad(${post.id})" class="btn  rounded-3xl bg-[#DCFCE7]">${post.category}</button>
+                        <button class="btn  rounded-3xl bg-[#DCFCE7]">${post.category}</button>
                         <h3><span class = "text-2xl">৳</span>${post.price}</h3>
                     </div>
-                    <button class="btn bg-[#15803D] text-white w-full rounded-3xl">Add to Cart</button>
+                    <button onclick = "addtoCart('${post.name}',${post.price})" class="btn bg-[#15803D] text-white w-full rounded-3xl">Add to Cart</button>
                 </div> 
        
        `
@@ -122,7 +122,27 @@ const categoryDisplay = (id) => {
         container.append(newContainer)
     })
 }
-
-
-
+let total = 0;
+// cart section
+const addtoCart = (name, number) => {
+    const num = number;
+      const container = document.getElementById('cart-section');
+      const newContainer = document.createElement('div');
+      newContainer.innerHTML = `
+                      <div  class="bg-[#F0FDF4] p-2 rounded-xl mt-3 flex justify-between ">
+                       <div>
+                        <h1 class="font-semibold">${name}</h1>
+                      <p ><span class="text-xl">৳</span>${number} x 1</p>
+                      </div>
+                      <div>
+                        <i class="fa-solid fa-xmark"></i>
+                      </div>
+                      </div>
+                </div>
+      `
+      total +=num;
+      document.getElementById('total').innerHTML = total;
+      
+      container.append(newContainer)
+}
 category();
