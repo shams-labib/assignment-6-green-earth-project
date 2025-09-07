@@ -73,6 +73,7 @@ const displaAllplants = (posts)=> {
 
 // button e click korle ei section kaj korbe
 const loadData = (no)=> {
+    manageSpinner(true)
     const url = `https://openapi.programming-hero.com/api/category/${no}`
     fetch(url)
     .then(res => res.json())
@@ -102,9 +103,21 @@ const displaLoadData = (data) => {
        
        `
        conatiner.append(newContainer)
+       manageSpinner(false)
     })
 }
 
+// spinner section
+const manageSpinner = (status) => {
+    if(status == true){
+        document.getElementById("spinner").classList.remove('hidden');
+        document.getElementById("card-container").classList.add('hidden');
+    }
+    else{
+        document.getElementById('spinner').classList.add('hidden')
+        document.getElementById('card-container').classList.remove('hidden');
+    }
+}
 
 
 // Button section with API
@@ -125,6 +138,7 @@ const categoryDisplay = (id) => {
 let total = 0;
 // cart section
 const addtoCart = (name, number) => {
+    alert(`${name} has been added to the cart`)
     const num = number;
       const container = document.getElementById('cart-section');
       const newContainer = document.createElement('div');
